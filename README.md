@@ -280,7 +280,20 @@ BOnlineHomeAssignement/
    cd BOnlineHomeAssignement
    ```
 
-2. **Start services with Docker Compose**
+2. **Create the `.env` file** (required for Docker)
+   ```bash
+   # Copy the example file and update with your settings
+   cp .env.example .env
+   ```
+
+   Then edit `.env` and set a strong password for `MSSQL_SA_PASSWORD`:
+   ```
+   MSSQL_SA_PASSWORD=YourStrongPassword123!
+   ```
+
+   **Note**: The `.env` file is in `.gitignore` for security (it contains secrets). Each developer must create it locally after cloning.
+
+3. **Start services with Docker Compose**
    ```bash
    docker-compose up -d
    ```
@@ -289,13 +302,13 @@ BOnlineHomeAssignement/
    - ASP.NET Core API (port 5000)
    - React frontend (port 3000)
 
-3. **Apply database migrations**
+4. **Apply database migrations**
    ```bash
    cd BOnlineHomeAssignement.Server
    dotnet ef database update
    ```
 
-4. **Run the application**
+5. **Run the application**
    - Backend: `dotnet run` (from `BOnlineHomeAssignement.Server/`)
    - Frontend: `npm run dev` (from `bonlinehomeassignement.client/`)
 
