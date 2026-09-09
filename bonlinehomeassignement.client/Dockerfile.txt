@@ -1,0 +1,18 @@
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+# Copy csproj and restore (adjust path if your project file name is different)
+COPY Client/*.csproj ./Client/
+WORKDIR /src/Client
+RUN dotnet restore
+
+# Copy rest and publish
+COPY Client/. .
+RUN dotnet publish -c Release -o /app/publish /p:TargetFramework=net10.0
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "Client.dll"]

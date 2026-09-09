@@ -1,0 +1,91 @@
+```mermaid
+erDiagram
+	TENANT {
+		string TenantId PK
+		string Name
+	}
+	PROGRAM {
+		guid ProgramId PK
+		string TenantId FK
+		string Name
+	}
+	TENANT_CONFIGURATION {
+		guid ConfigId PK
+		string TenantId FK
+		guid? ProgramId FK
+		datetime EffectiveFrom
+	}
+	FOLLOWUP_RULE {
+		guid RuleId PK
+		guid ConfigId FK
+		bool Enabled
+		int OffsetDays
+		string Name
+	}
+	PATIENT {
+		guid PatientId PK
+		string TenantId FK
+		string ExternalPatientRef
+		string FirstName
+		string LastName
+		date   BirthDate
+		bool   IsDeleted
+	}
+	ENROLLMENT {
+		guid EnrollmentId PK
+		guid PatientId FK
+		guid ProgramId FK
+		string Status
+		datetime EnrolledAt
+	}
+	TASK_ITEM {
+		guid TaskId PK
+		string TenantId FK
+		string OriginKey    "unique per tenant"
+		guid EnrollmentId FK
+		guid? AssignedToUserId
+		string Type
+		string Status
+		datetime DueDate
+		string EncryptedFollowUpNote
+		int AttemptCount
+		datetime CreatedAt
+		datetime? CompletedAt
+	}
+	USER {
+		guid UserId PK
+		string TenantId FK
+		string UserName
+		string RoleId FK
+	}
+	ROLE {
+		guid RoleId PK
+		string Name
+	}
+	AUDIT_LOG {
+		guid AuditId PK
+		string TenantId FK
+		string EntityType
+		string EntityId
+		string Action
+		string DataEncrypted
+		datetime CreatedAt
+	}
+
+	TENANT ||--o{ PROGRAM : has
+	TENANT ||--o{ TENANT_CONFIGURATION : has
+	TENANT ||--o{ PATIENT : has
+	PROGRAM ||--o{ ENROLLMENT : has
+	PATIENT ||--o{ ENROLLMENT : has
+	TENANT_CONFIGURATION ||--o{ FOLLOWUP_RULE : has
+	ENROLLMENT ||--o{ TASK_ITEM : generates
+	TENANT ||--o{ TASK_ITEM : owns
+	TENANT ||--o{ USER : owns
+	USER ||--o{ TASK_ITEM : assigned_to
+	TENANT ||--o{ AUDIT_LOG : logs
+```
+
+ERD notes
+- Add unique index on TASK_ITEM (TenantId, OriginKey).
+- FollowUpRule can be scoped per Tenant or Program (nullable ProgramId).
+- `EncryptedFollowUpNote` stores ciphertext; decryption performed by `IEncryptionService`.

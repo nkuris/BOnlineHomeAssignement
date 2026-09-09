@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="HCC_Senior_NET_Assessment_Candidate_HE_RTL.docx" />
+    <File Path="Patient Support Cloud - System Design &amp; Architecture Document V3.docx" />
+  </Folder>
+  <Project Path="bonlinehomeassignement.client/bonlinehomeassignement.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="BOnlineHomeAssignement.Server/BOnlineHomeAssignement.Server.csproj" />
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+</Solution>

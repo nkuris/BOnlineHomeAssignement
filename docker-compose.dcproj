@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
+  <PropertyGroup Label="Globals">
+    <ProjectVersion>2.1</ProjectVersion>
+    <DockerTargetOS>Linux</DockerTargetOS>
+    <ProjectGuid>81dded9d-158b-e303-5f62-77a2896d2a5a</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include=".env" />
+    <None Include=".env.example" />
+    <None Include=".github\copilot-instructions.md" />
+    <None Include=".gitignore" />
+    <None Include="ASSIGNMENT_COMPLETION_SUMMARY.md" />
+    <None Include="ASSIGNMENT_RESPONSE_OVERVIEW.md" />
+    <None Include="ASSIGNMENT_VALIDATION.md" />
+    <None Include="BOnlineHomeAssignement.Server.SqlTools\CheckSa.csproj" />
+    <None Include="BOnlineHomeAssignement.Server.SqlTools\Program.cs" />
+    <None Include="COMPLETE_DOCUMENTATION_INDEX.md" />
+    <None Include="CONNECTIONS_ANSWER.md" />
+    <None Include="docker-compose.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
+    <None Include="docker-compose.yml" />
+    <None Include=".dockerignore" />
+    <None Include="DOCKER_FIX_SUMMARY.md" />
+    <None Include="DOCKER_VERIFICATION.md" />
+    <None Include="docs\Docker.md" />
+    <None Include="docs\ERD.mmd" />
+    <None Include="docs\ERD_README.md" />
+    <None Include="docs\README.md" />
+    <None Include="DOCUMENTATION_INDEX.md" />
+    <None Include="ERD.txt" />
+    <None Include="EXTENDED_REQUIREMENTS_IMPLEMENTATION.md" />
+    <None Include="EXTENDED_REQUIREMENTS_SUMMARY.md" />
+    <None Include="IMPLEMENTATION_SUMMARY.md" />
+    <None Include="OUTSTANDING_WORK.md" />
+    <None Include="PHASE_2_IMPLEMENTATION_ROADMAP.md" />
+    <None Include="PHASE_2_QUICK_START.md" />
+    <None Include="PHASE_3_5_COMPLETION_SUMMARY.md" />
+    <None Include="README.md" />
+    <None Include="SCOPE_ADHERENCE.md" />
+    <None Include="tools\init-db.ps1" />
+    <None Include="WORKFLOW_ARCHITECTURE.md" />
+    <None Include="WORKFLOW_CONNECTIONS.md" />
+    <None Include="WORKFLOW_QUICK_REFERENCE.md" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  server:
+    build:
+      target: final
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+    ports:
+      - "5000:5000"
+
+  client:
+    volumes:
+      - ./bonlinehomeassignement.client:/workspace/bonlinehomeassignement.client:cached
+    environment:
+      - DEV_SERVER_PORT=3000
+      - VITE_API_URL=  # Leave empty in dev mode to use Vite proxy (/api)
+    # Use the client Dockerfile's 'build' stage which is based on the node image
+    # so `npm` is available. This runs the container from the node-based stage
+    # for local development (hot-reload) instead of the nginx production stage.
+    build:
+      target: build
+    command: ["npm", "run", "dev"]
+    ports:
+      - "3000:3000"

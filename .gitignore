@@ -1,0 +1,7 @@
+.env
+dockerdata/
+bin/
+obj/
+.vs/
+*.user
+*.suo

@@ -1,0 +1,66 @@
+version: '3.8'
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: ps_mssql
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "${MSSQL_SA_PASSWORD}"
+    ports:
+      - "1433:1433"
+    # Use a named Docker volume instead of a host bind mount to avoid
+    # permission problems when the container expects a Linux filesystem
+    # and ownership/permissions that don't map cleanly from the host.
+    volumes:
+      - mssql-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD", "bash", "-c", "exec 3<>/dev/tcp/localhost/1433 && echo 'PING' >&3"]
+      interval: 5s
+      timeout: 10s
+      start_period: 120s
+      retries: 30
+    networks:
+      - psnet
+
+  server:
+    build:
+      context: ./BOnlineHomeAssignement.Server
+      dockerfile: Dockerfile
+    container_name: bonlinehomeassignement-server
+    hostname: bonlinehomeassignement-server
+    env_file:
+      - .env
+    depends_on:
+      mssql:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=mssql,1433;Database=PatientSupport;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+    ports:
+      - "5000:5000"
+    networks:
+      - psnet
+    # no extra volumes required
+
+
+  client:
+    build:
+      context: ./bonlinehomeassignement.client
+      dockerfile: Dockerfile
+    environment:
+      - VITE_API_URL=http://server:80
+    # Do not publish port here to avoid conflicts with the dev override which
+    # exposes the dev server on 3000. The override file will map the host port
+    # during development.
+    networks:
+      - psnet
+
+networks:
+  psnet:
+    driver: bridge
+
+volumes:
+  mssql-data:
+    driver: local
+
