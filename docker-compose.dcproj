@@ -24,7 +24,6 @@
     <None Include=".dockerignore" />
     <None Include="DOCKER_FIX_SUMMARY.md" />
     <None Include="DOCKER_VERIFICATION.md" />
-    <None Include="docs\Docker.md" />
     <None Include="docs\ERD.mmd" />
     <None Include="docs\ERD_README.md" />
     <None Include="docs\README.md" />
